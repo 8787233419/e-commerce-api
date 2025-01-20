@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.views import LoginView
 
-# Create your views here.
-# def front(request) :
-#     return render(request, '#the html file')
+class Login(LoginView) :
+    template_name = 'users/profile.html'
+    fields = '__all__'
+    redirect_authenticated_user = True
 
-# Instead of a html file (dne till now) so instead a http response
-def taskList(request) : 
-    return HttpResponse('Ok?')
+def Home(request) :
+    return HttpResponse("The main page")
