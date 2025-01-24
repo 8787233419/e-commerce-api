@@ -15,7 +15,7 @@ class Member(models.Model) :
 
     def __str__(self) :
         return self.user_id
-
+'''
 class UserLogin(models.Model) :
     user = models.OneToOneField(Member, on_delete = models.CASCADE, null = True)
     password = models.CharField(max_length = 16, validators = [MinLengthValidator(8)])
@@ -31,12 +31,12 @@ class PwdHistory(models.Model):
 
     def __str__(self):
         return self.user.user_id
-    
+'''
 #models for products, their categories, pricing, history etc
     
 class Category(models.Model):
-    cat_id = models.IntegerField(unique=True)
-    cat_name = models.CharField(max_length=255, unique=True)
+    cat_id = models.IntegerField(primary_key=True)
+    cat_name = models.CharField(max_length=255, primary_key=True)
     desc= models.CharField(max_length=500)
     cat_img = models.ImageField( upload_to = './images', default = './images/template.png')
 
@@ -47,7 +47,7 @@ class Category(models.Model):
     
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete = models.CASCADE, null = True)
-    prod_id = models.IntegerField(unique=True)
+    prod_id = models.IntegerField(primary_key=True)
     prod_name = models.CharField(max_length=255)
     prod_desc = models.CharField(max_length=500)
     product_img = models.ImageField(upload_to = './images', default = './images/template.png')

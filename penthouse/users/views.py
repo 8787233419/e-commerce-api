@@ -1,11 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.contrib.auth.views import LoginView
+from rest_framework import viewsets
+from .models import Member, UserLogin, PwdHistory, Category, Product, Order
+from .serializer import MemberSerializer #, UserLogin, PwdHistory, Category, Product, Order
 
-class Login(LoginView) :
-    template_name = 'users/profile.html'
-    fields = '__all__'
-    redirect_authenticated_user = True
+def getMember(request) :
+    queryset = Member.objects.all()
+    serializer = MemberSerializer
+    # return Response(serializer.data)
 
-def Home(request) :
-    return HttpResponse("The main page")
+# class Login(LoginView) :
+#     template_name = 'users/profile.html'
+#     fields = '__all__'
+#     redirect_authenticated_user = True
+
+# def Home(request) :
+#     return HttpResponse("The main page")
