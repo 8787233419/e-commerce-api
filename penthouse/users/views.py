@@ -1,17 +1,32 @@
-from django.shortcuts import render
-from rest_framework import viewsets
-from .models import Member, UserLogin, PwdHistory, Category, Product, Order
-from .serializer import MemberSerializer #, UserLogin, PwdHistory, Category, Product, Order
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Member
+from .serializers import MemberSerializer
 
-def getMember(request) :
-    queryset = Member.objects.all()
-    serializer = MemberSerializer
-    # return Response(serializer.data)
+@api_view(['POST'])
+def Register(request):
+    serializer = MemberSerializer(data=request.data)
+    
+    if serializer.is_valid():
+        serializer.save()
+    else :
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class Login(LoginView) :
-#     template_name = 'users/profile.html'
-#     fields = '__all__'
-#     redirect_authenticated_user = True
+@api_view(['POST'])
+def Login(request):
+    user_id = request.data.get('user_id')
+    password = request.data.get('password')
 
-# def Home(request) :
-#     return HttpResponse("The main page")
+    try:
+        member = Member.objects.get(user_id=user_id)
+        if member.password == password:
+            return Response({'message': 'Successfully logged in'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+    except Member.DoesNotExist:
+        return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def Logout(request):
+    request.session.flush() 

@@ -36,7 +36,7 @@ class PwdHistory(models.Model):
     
 class Category(models.Model):
     cat_id = models.IntegerField(primary_key=True)
-    cat_name = models.CharField(max_length=255, primary_key=True)
+    cat_name = models.CharField(max_length=255)
     desc= models.CharField(max_length=500)
     cat_img = models.ImageField( upload_to = './images', default = './images/template.png')
 
@@ -58,11 +58,11 @@ class Product(models.Model):
         return self.prod_name
     
 #models for order,payment,orderlist,shipping etc
-class Order(models.Model):
-    product = models.ForeignKey(Product, on_delete = models.CASCADE, null = True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    qty = models.IntegerField()
-    order_id = models.IntegerField()
+# class Order(models.Model):
+#     product = models.ForeignKey(Product, on_delete = models.CASCADE, null = True)
+#     price = models.DecimalField(max_digits=10, decimal_places=2)
+#     qty = models.IntegerField()
+#     order_id = models.IntegerField()
 
-    def __str__(self):
-        return self.order_id
+#     def __str__(self):
+#         return self.order_id
