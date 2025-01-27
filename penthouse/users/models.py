@@ -38,7 +38,7 @@ class Category(models.Model):
     cat_id = models.IntegerField(primary_key=True)
     cat_name = models.CharField(max_length=255)
     desc= models.CharField(max_length=500)
-    cat_img = models.ImageField( upload_to = './images', default = './images/template.png')
+    cat_img = models.ImageField( upload_to = './images')
 
     def __str__(self):
         return self.cat_name
@@ -50,7 +50,7 @@ class Product(models.Model):
     prod_id = models.IntegerField(primary_key=True)
     prod_name = models.CharField(max_length=255)
     prod_desc = models.CharField(max_length=500)
-    product_img = models.ImageField(upload_to = './images', default = './images/template.png')
+    product_img = models.ImageField(upload_to = './images')
     price = models.IntegerField()
     stock_qty = models.IntegerField()
 
