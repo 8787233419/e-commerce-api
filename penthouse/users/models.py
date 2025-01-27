@@ -58,11 +58,11 @@ class Product(models.Model):
         return self.prod_name
     
 #models for order,payment,orderlist,shipping etc
-# class Order(models.Model):
-#     product = models.ForeignKey(Product, on_delete = models.CASCADE, null = True)
-#     price = models.DecimalField(max_digits=10, decimal_places=2)
-#     qty = models.IntegerField()
-#     order_id = models.IntegerField()
+class Order(models.Model):
+    product = models.ForeignKey(Product, on_delete = models.CASCADE, null = True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    qty = models.IntegerField()
+    order_id = models.IntegerField()
 
-#     def __str__(self):
-#         return self.order_id
+    def __str__(self):
+         return self.order_id

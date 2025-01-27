@@ -29,4 +29,4 @@ def Login(request):
 
 @api_view(['POST'])
 def Logout(request):
-    request.session.flush() 
+    request.session.flush()
