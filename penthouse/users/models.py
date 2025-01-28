@@ -62,7 +62,7 @@ class Order(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE, null = True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     qty = models.IntegerField()
-    order_id = models.IntegerField()
+    order_id = models.CharField(primary_key=True,max_length=25)
     user=models.ForeignKey(Member,on_delete=models.CASCADE,null=True)
 
     def __str__(self):
