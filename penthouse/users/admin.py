@@ -4,4 +4,7 @@ from django.apps import apps
 post_models=apps.get_app_config('users').get_models()
 
 for model in post_models:
-    admin.site.register(model)
+    try:
+        admin.site.register(model)
+    except admin.sites.AlreadyRegistered :
+        pass
