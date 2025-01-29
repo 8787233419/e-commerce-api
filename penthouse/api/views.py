@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
-from users.models import Category, Product
-from .serializers import CategorySerializer, ProductSerializer
+from users.models import Category, Product, Order, Member
+from .serializers import CategorySerializer, ProductSerializer, OrderSerializer
 
 @api_view(['GET'])
 def CategoryList(request) :
@@ -23,6 +23,13 @@ def ProductByCategory(request) :
     products = Product.objects.filter(category = category) # .get expects 1 object
     serializer = ProductSerializer(products, many = True)
     return JsonResponse(serializer.data, safe = False)
+
+@api_view(['GET'])
+def OrderByUser(request) :
+    user = request.query_params.get('user_id')
+    order = Order.objects.filter(user_id=user)
+    serializer = OrderSerializer(order, many= True)
+    return JsonResponse(serializer.data, safe= False )
 
 
 # login, logout, register, all prev order/cart, user details
