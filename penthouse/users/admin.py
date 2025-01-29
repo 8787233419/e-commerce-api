@@ -7,4 +7,4 @@ for model in post_models:
     try:
         admin.site.register(model)
     except admin.sites.AlreadyRegistered :
-        pass  
+        pass
