@@ -50,6 +50,7 @@ def Login(request) :
     
     try :
         member = Member.objects.get(user_id = user_id)
+      #  print (member.user_id)
         if member.password == password :
             return JsonResponse({'message': 'Login successful'})
         else :
