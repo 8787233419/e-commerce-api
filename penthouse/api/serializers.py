@@ -15,3 +15,8 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta :
         model = Order
         fields = '__all__'
+
+class MemberSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = Member
+        fields = 'user_id','full_name','address','mobile_no'
