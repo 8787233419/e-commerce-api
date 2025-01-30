@@ -19,10 +19,9 @@ def ProductList(request) :
 
 @api_view(['GET'])
 def ProductByCategory(request,pk) :
-    category = pk # .data for POST
-    print (category)
-
-    products = Product.objects.filter(category = category) # .get expects 1 object
+#     category = pk # .data for POST
+#     print (category)
+    products = Product.objects.filter(category = pk) # .get expects 1 object
     print(products)
     serializer = ProductSerializer(products, many = True)
     return JsonResponse(serializer.data, safe = False)
@@ -36,11 +35,11 @@ def OrderByUser(request) :
 
 @api_view(['GET'])
 def UserDetails(request,pk) :
-    user_id =pk
-    print(user_id)
+    # user_id =pk
+    # print(user_id)
     userDetails = Member.objects.filter(user_id = pk)
     # print (userDetails.data)
-    serializer = MemberSerializer(userDetails, many = True)
+    serializer = MemberSerializer(userDetails)
     return JsonResponse(serializer.data, safe = False)
 
 @api_view(['POST'])
@@ -52,7 +51,8 @@ def Login(request) :
         member = Member.objects.get(user_id = user_id)
       #  print (member.user_id)
         if member.password == password :
-            return JsonResponse({'message': 'Login successful'})
+            serializer = MemberSerializer(member)
+            return JsonResponse(serializer.data)
         else :
             return JsonResponse({'error': 'Incorrect password'})
     except ObjectDoesNotExist:
