@@ -3,7 +3,9 @@ from rest_framework.decorators import api_view
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from users.models import Category, Product, Order, Member
-from .serializers import CategorySerializer, ProductSerializer, OrderSerializer, MemberSerializer
+from .serializers import CategorySerializer, ProductSerializer, OrderSerializer, MemberSerializer, RegisterSerializer
+from rest_framework import status 
+
 
 @api_view(['GET'])
 def CategoryList(request) :
@@ -59,3 +61,12 @@ def Login(request) :
         return JsonResponse({'error': 'User does not exist'})
 
 # login, logout, register, all prev order/cart, user details
+@api_view(['POST'])
+def register(request) :
+    serializer = RegisterSerializer(data=request.data)
+
+    if serializer.is_valid():
+        member = serializer.save()  
+        return JsonResponse({"message": "Member registered successfully","user_id": member.user_id}, status=status.HTTP_201_CREATED)
+    
+    return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
