@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from users.models import Category, Product, Order, Member
 from django.core.validators import MinLengthValidator, MinValueValidator, MaxValueValidator
+from django.contrib.auth.hashers import make_password
 
 class CategorySerializer(serializers.ModelSerializer) :
     class Meta :
@@ -34,8 +35,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             user_id=validated_data['user_id'],
             full_name=validated_data['full_name'],
             address=validated_data['address'],
-            mobile_no=validated_data['mobile_no']
+            mobile_no=validated_data['mobile_no'],
+            password=make_password(validated_data['password'])
         )
-        member.password = validated_data['password']
-        member.save()
         return member
