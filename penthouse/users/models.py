@@ -47,24 +47,25 @@ class Category(models.Model):
     
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete = models.CASCADE, null = True)
-    prod_id = models.IntegerField(primary_key=True)
-    prod_name = models.CharField(max_length=255)
-    prod_desc = models.CharField(max_length=500)
+    product_id = models.IntegerField(primary_key=True)
+    product_name = models.CharField(max_length=255)
+    product_desc = models.CharField(max_length=500)
     product_img = models.ImageField(upload_to = './images')
     price = models.IntegerField()
     stock_qty = models.IntegerField()
 
     def __str__(self):
-        return self.prod_name
+        return self.product_name
     
 
 class Order(models.Model):
     product_id = models.ForeignKey(Product, on_delete = models.CASCADE, null = True)
     order_total = models.DecimalField(max_digits=10, decimal_places=2)
-    order_date = models.DateTimeField(null=True)
+    # order_date = models.DateTimeField(null=True)
     order_id = models.CharField(primary_key=True,max_length=25)
     user_id=models.ForeignKey(Member,on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return self.order_id
+    
       

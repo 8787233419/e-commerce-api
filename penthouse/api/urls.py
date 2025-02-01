@@ -8,5 +8,6 @@ urlpatterns = [
     path('ordersbyuser/', OrderByUser, name='orderbyuser'),
     path('user-details/<str:pk>', UserDetails, name='user-details'),
     path('login/', Login, name='login'),
+    # path('addorder/', PlacingOrder, name='orderadd'),
     path('register/', Register,name='register'),
 ]

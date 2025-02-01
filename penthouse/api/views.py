@@ -71,3 +71,21 @@ def Register(request) :
         return JsonResponse({"message": "Member registered successfully","user_id": member.user_id}, status=status.HTTP_201_CREATED)
     
     return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# @api_view(['POST'])
+# def PlacingOrder(request) :
+#     # r_data={
+#     product_id=request.data.get('product_id')
+#     order_total=request.data.get('order_total')
+#     # order_date=request.data.get('order_date')
+#     order_id=request.data.get('order_id')
+#     user_id=request.data.get('user_id')
+#     # }
+#     print(product_id[1])
+
+#     for i in range(len(product_id)):
+#         Order.objects.create(order_id=order_id,product_id_id=product_id[i],order_total=order_total,user_id_id=user_id)
+
+#     return JsonResponse({"msg":"orderplaced"})    
+
+
