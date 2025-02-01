@@ -21,8 +21,6 @@ def ProductList(request) :
 
 @api_view(['GET'])
 def ProductByCategory(request,pk) :
-#     category = pk # .data for POST
-#     print (category)
     products = Product.objects.filter(category = pk) # .get expects 1 object
     print(products)
     serializer = ProductSerializer(products, many = True)
@@ -37,10 +35,7 @@ def OrderByUser(request) :
 
 @api_view(['GET'])
 def UserDetails(request,pk) :
-    # user_id =pk
-    # print(user_id)
     userDetails = Member.objects.filter(user_id = pk)
-    # print (userDetails.data)
     serializer = MemberSerializer(userDetails)
     return JsonResponse(serializer.data, safe = False)
 
@@ -51,19 +46,25 @@ def Login(request) :
     
     try :
         member = Member.objects.get(user_id = user_id)
-      #  print (member.user_id)
         if member.password == password :
             serializer = MemberSerializer(member)
             return JsonResponse(serializer.data)
         else :
             return JsonResponse({'error': 'Incorrect password'})
     except ObjectDoesNotExist:
-        return JsonResponse({'error': 'User does not exist'})
+        return JsonResponse({'error': 'User does not exist'}, status=status.HTTP_400_BAD_REQUEST)
 
-# login, logout, register, all prev order/cart, user details
+
 @api_view(['POST'])
-def register(request) :
-    serializer = RegisterSerializer(data=request.data)
+def Register(request) :
+    r_data={
+        "user_id":request.data.get('user_id'),
+        "full_name":request.data.get('full_name'),
+        "address":request.data.get('address'),
+        "mobile_no":request.data.get('mobile_no'),
+        "password":request.data.get('password')
+    }
+    serializer = RegisterSerializer(data = r_data)
 
     if serializer.is_valid():
         member = serializer.save()  

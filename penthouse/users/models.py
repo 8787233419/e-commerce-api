@@ -57,7 +57,7 @@ class Product(models.Model):
     def __str__(self):
         return self.prod_name
     
-#models for order,payment,orderlist,shipping etc
+
 class Order(models.Model):
     product_id = models.ForeignKey(Product, on_delete = models.CASCADE, null = True)
     order_total = models.DecimalField(max_digits=10, decimal_places=2)
