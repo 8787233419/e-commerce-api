@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CategoryList, ProductList, ProductByCategory, OrderByUser, Login, UserDetails, Register
+from .views import CategoryList, ProductList, ProductByCategory, OrderByUser, Login, UserDetails, Register, NewProduct
 
 urlpatterns = [
     path('categories/', CategoryList, name='categorylist'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('login/', Login, name='login'),
     # path('addorder/', PlacingOrder, name='orderadd'),
     path('register/', Register,name='register'),
+    path('newproduct/',NewProduct,name='newproduct')
 ]

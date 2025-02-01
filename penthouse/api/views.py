@@ -86,6 +86,13 @@ def Register(request) :
 #     for i in range(len(product_id)):
 #         Order.objects.create(order_id=order_id,product_id_id=product_id[i],order_total=order_total,user_id_id=user_id)
 
-#     return JsonResponse({"msg":"orderplaced"})    
+#     return JsonResponse({"msg":"orderplaced"})
 
-
+@api_view(['POST'])
+def NewProduct(request) :
+    serializer=ProductSerializer(data=request.data)
+    if serializer.is_valid():
+        product=serializer.save()
+        return JsonResponse({"message":"New Product added successfully","product_name":product.product_name}, status=status.HTTP_201_CREATED)
+    
+    return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

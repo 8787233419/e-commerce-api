@@ -50,9 +50,9 @@ class Product(models.Model):
     product_id = models.IntegerField(primary_key=True)
     product_name = models.CharField(max_length=255)
     product_desc = models.CharField(max_length=500)
-    product_img = models.ImageField(upload_to = './images')
+    product_img = models.ImageField(upload_to = './images',null=True,blank=True)
     price = models.IntegerField()
-    stock_qty = models.IntegerField()
+    
 
     def __str__(self):
         return self.product_name
@@ -61,9 +61,12 @@ class Product(models.Model):
 class Order(models.Model):
     product_id = models.ForeignKey(Product, on_delete = models.CASCADE, null = True)
     order_total = models.DecimalField(max_digits=10, decimal_places=2)
-    # order_date = models.DateTimeField(null=True)
+    order_date = models.DateTimeField(null=True,blank=True)
     order_id = models.CharField(primary_key=True,max_length=25)
     user_id=models.ForeignKey(Member,on_delete=models.CASCADE,null=True)
+    address= models.CharField(max_length=500,default="no address provided")
+    full_name= models.CharField(max_length=50,default="user123")
+    mobile_no=models.IntegerField(validators=[MinValueValidator(6666666666),MaxValueValidator(9999999999)],null=True)
 
     def __str__(self):
         return self.order_id
