@@ -20,3 +20,8 @@ class MemberSerializer(serializers.ModelSerializer):
     class Meta :
         model = Member
         fields = '__all__'
+
+class RegisterSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = Member
+        fields = ['user_id', 'full_name', 'address', 'mobile_no', 'password']
