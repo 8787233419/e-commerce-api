@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from users.models import Category, Product, Order, Member
 from .serializers import CategorySerializer, ProductSerializer, OrderSerializer, MemberSerializer, RegisterSerializer
 from rest_framework import status 
+from django.db import IntegrityError
 
 
 @api_view(['GET'])
@@ -90,9 +92,24 @@ def Register(request) :
 
 @api_view(['POST'])
 def NewProduct(request) :
-    serializer=ProductSerializer(data=request.data)
+    prod_data={
+        "category":request.data.get('category'),
+        "product_id":request.data.get('product_id'),
+        "product_name":request.data.get('product_name'),
+        "product_desc":request.data.get('product_desc'),
+        "product_img":request.data.get('product_img'),
+        "price":request.data.get('price')
+    }
+    serializer = ProductSerializer(data = prod_data)
     if serializer.is_valid():
+        try:
+            cat_id = request.data.get("category")
+            if cat_id:
+                if not Category.objects.filter(cat_id=cat_id).exists():
+                    return Response({"category": ["Category does not exist."]},status=status.HTTP_400_BAD_REQUEST)
+        except IntegrityError:
+            return Response({"error": "A product with this ID already exists."},status=status.HTTP_400_BAD_REQUEST)
         product=serializer.save()
         return JsonResponse({"message":"New Product added successfully","product_name":product.product_name}, status=status.HTTP_201_CREATED)
-    
     return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
