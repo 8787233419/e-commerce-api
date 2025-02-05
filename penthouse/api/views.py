@@ -30,10 +30,13 @@ def ProductByCategory(request,pk) :
 
 @api_view(['GET'])
 def OrderByUser(request) :
-    user = request.query_params.get('user_id')
-    order = Order.objects.filter(user_id=user)
-    serializer = OrderSerializer(order, many= True)
-    return JsonResponse(serializer.data, safe= False )
+    user = request.data.get('user_id')
+    orders = Order.objects.filter(user_id=user)
+    serializer = OrderSerializer(orders, many= True)
+    Orders = {}
+    for order in serializer.data :
+        Orders[order['order_id']] = order
+    return JsonResponse(Orders)
 
 @api_view(['GET'])
 def UserDetails(request,pk) :
